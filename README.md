@@ -1,16 +1,19 @@
-# notes
-school stuff.
+# Silver Eureka 🌼
 
-- [ ] Add in more resources
-- [ ] set up gh-pages for this?
+My notes for school.
 
-## my subjects
+**TODO:**
+- [ ] Add more resources
+- [ ] Set up gh-pages for this?
 
-- hl
-	- [computer science](/compsci)
-	- [mathematics analysis & approaches](/english)
-	- [physics](/physics)
-- sl
-	- [psychology](/psych)
-	- [english language & literature](/english)
-	- [mandarin ab initio](/mandarin)
+## My subjects
+
+#### HL
+- [Computer Science](/compsci)
+- [Mathematics: Analysis & Approaches](/english)
+- [Physics](/physics)
+
+#### SL
+- [Psychology](/psych)
+- [English Language & Literature](/english)
+- [Mandarin Ab Initio](/mandarin)
