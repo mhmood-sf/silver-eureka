@@ -12,9 +12,9 @@ To what extent is type inference possible for statically typed polymorphic objec
 These are some topics I considered/was interested in when looking for my EE topic.
 
 - Type systems / Type inference
-  - Specifically, Hindley-Milner: [HM Wikipedia page](1)
-  - [A simple type inference algorithm in python](2)
-  - [A Haskell implementation of Algorithm W](3)
+  - Specifically, Hindley-Milner: [HM Wikipedia page][1]
+  - [A simple type inference algorithm in python][2]
+  - [A Haskell implementation of Algorithm W][3]
 
 - Dynamic Programming
 
@@ -26,11 +26,11 @@ These are some topics I considered/was interested in when looking for my EE topi
 
 - Distributed fault-tolerant systems and concurrent programming
   - Specifically, a sort of case study into thedesign and implementation of the BEAM VM and the Elixir/Erlang ecosystem.
-  - [Paper on reliable distributed systems](4)
-  - [History of the BEAM compiler](5)
-  - [Concurrency with BEAM & Elixir](6)
-  - [Paper on algorithm for a concurrent FIFO queue](7)
-  - [This paper on the Reduceron, a processor optimized specifically for parallelism and functional programming](8)
+  - [Paper on reliable distributed systems][4]
+  - [History of the BEAM compiler][5]
+  - [Concurrency with BEAM & Elixir][6]
+  - [Paper on algorithm for a concurrent FIFO queue][7]
+  - [This paper on the Reduceron, a processor optimized specifically for parallelism and functional programming][8]
 
 <!-- LINKS -->
 [1]: https://en.wikipedia.org/wiki/Hindley%E2%80%93Milner_type_system
