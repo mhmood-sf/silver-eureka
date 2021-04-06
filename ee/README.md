@@ -1,7 +1,5 @@
 ## EE
 
-I did mine in Computer Science 😃
-
 ### Topic
 Programming langauge design / Type systems
 

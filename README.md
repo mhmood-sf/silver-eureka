@@ -1,10 +1,6 @@
-# Silver Eureka 🌼
+# Silver Eureka
 
-My notes for school.
-
-**TODO:**
-- [ ] Add more resources
-- [ ] Set up gh-pages for this?
+School-related stuff.
 
 ## My subjects
 
@@ -17,3 +13,4 @@ My notes for school.
 - [Psychology](/psych)
 - [English Language & Literature](/english)
 - [Mandarin Ab Initio](/mandarin)
+
