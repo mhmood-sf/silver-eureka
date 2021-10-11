@@ -1,16 +1,17 @@
 # Silver Eureka
 
-School-related stuff.
+School-related stuff from IB.
 
-## My subjects
+## Subjects
 
 #### HL
-- [Computer Science](/compsci)
-- [Mathematics: Analysis & Approaches](/english)
-- [Physics](/physics)
+- [Computer Science](/compsci): 7
+- [Mathematics: Analysis & Approaches](/math): 7
+- Physics: 6
 
 #### SL
-- [Psychology](/psych)
-- [English Language & Literature](/english)
-- [Mandarin Ab Initio](/mandarin)
+- [Psychology](/psych): 7
+- English Language & Literature: 6
+- Mandarin Ab Initio: 7
 
+[EE](/ee) / [ToK](/tok) / CAS: 2

@@ -1,0 +1,28 @@
+\section{Introduction}
+
+\subsection{Background}
+
+The design and implementation of programming languages has come a long way since the use of machine code for directly programming computers. These improvements have allowed the development of software systems larger than ever before, without sacrificing on correctness or robustness. \textbf{Type systems} are a vital part of programming language design that have allowed computer programmers to meet the demands for correct and properly functional programs. One definition of type systems for programming languages would be: ``A type system is a tractable syntactic method for proving the absence of certain program behaviors by classifying phrases according to the kinds of values they compute'' (\cite{pierce} 1). In other words, type systems assign a \textit{type} to different expressions and constructs in a programming language based on properties such as the values they compute. The type system can then reason about the behavior of a program by methodically looking at how different types interact with each other, and then based on the rules of the type system, decide whether the program is well-behaved (it adheres to the rules of the system) or not. As an example, the following Java program fails to compile due to an error in the type system:
+
+\begin{lstlisting}[label=lst:BadDiv,caption=Ill-behaved Java program]
+int x = 1;
+String y = "2";
+// error: bad operand types for binary operator `/'
+System.out.println(x / y);
+\end{lstlisting}
+
+While the error is obvious in this example, in larger codebases it is not always easy for the programmer to notice small errors. This is where the type checker comes in. The job of a type checker (which is usually included in the compiler itself) is to ensure that the source code adheres to the rules of the type system.
+
+\subsection{Type Inference}
+
+Due to its vast benefits, most compiled languages offer some form of type checking in order to aid the development of software. However, type checking has certain drawbacks that make it an inconvenient feature for programmers in certain situations. One major drawback is that sound type checking requires that all expressions appearing in the source code must belong to a certain type. In order to satisfy this requirement, the programmer has to manually annotate every expression with its type, such as in the first two lines of Listing~\ref{lst:BadDiv}. This can often lead to overly verbose code and hinder productivity. For example, one criticism of Java that influenced the development of the Kotlin programming language was its verbosity, which in turn leads to poor readability (\cite{breslav}).
+
+The solution to this is to have the compiler analyze a program to automatically infer the types of expressions appearing in it. This is known as \textbf{type inference} (\cite{krishnamurthi2012}). Type inference eliminates the need for programmers to explicitly annotate expressions. Moreover, type inference can be integrated within tools such as Integrated Development Environments (IDEs) to further aid development by, for example, providing documentation or catching errors before executing the program. Due to its close ties with the type system, powerful type inference is often also indicative of a powerful type system.
+
+\subsection{Type Inference for OOP Languages}
+
+Languages belonging to the functional programming (FP) paradigm, such as Standard ML or Haskell, have included type inference as a feature for a long time. However, it has been largely absent from most common object-oriented programming (OOP) languages for quite some time, and has only recently started to become a common feature of some (\cite{leandro}). This is because the strong type systems of FP languages lend themselves well to type inference, whereas for OOP languages certain features (in particular, polymorphism) make type inference a much more difficult task.
+
+Given the benefits of type inference and type checking, and considering the popularity of OOP languages, the question of to what extent type inference is possible for statically typed polymorphic OOP languages is an interesting one which I was interested to study further.
+
+Note that because OOP is merely a paradigm, languages are free to choose how closely they adhere to OOP principles. As such, this essay does not focus on any particular language. Rather, it develops the minimal lambda calculus (\lambdacalc) for reasoning about programming languages, and later extends it with features of polymorphism common (but not strictly unique) to OOP languages. This is then used to explore and understand barriers to type inference in OOP languages.

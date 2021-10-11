@@ -1,0 +1,97 @@
+\section{The Lambda Calculus}
+
+\subsection{Untyped \lambdacalc{}}
+
+The untyped \lambdacalc{} (\cite{church1936}; \cite{church1941}) is a minimal yet Turing-complete programming language that can be used to model computation, using only function abstraction and application. Its usefulness comes from the fact that it can be considered not only as a programming language, but also a formal system for making and proving logical statements (\cite{pierce}). It is an important tool in programming language design, and will also help us in exploring type inference for OOP languages. In order to illustrate its use, we will begin with the untyped \lambdacalc{} and extend it to obtain the Simply-Typed Lambda Calculus (STLC).
+
+The syntax of the untyped \lambdacalc{} is as follows, using Backus-Naur form (BNF) notation (see \hyperref[sec:AppA]{Appendix A} for a summary of this notation):
+\begin{center}
+\texttt{t ::=} 						\hfill \textit{terms:} \\
+\hspace{2em} $x$ 					\hfill \textit{variable} \\
+\hspace{2em} | \abs{$x$}{\tm{t}{}}	\hfill \textit{abstraction} \\
+\hspace{2em} | \tm{t}{} \tm{t}{} 	\hfill \textit{application} \\
+\texttt{v ::=} 						\hfill \textit{values:} \\
+\hspace{2em} \abs{$x$}{\tm{t}{}} 	\hfill \textit{abstraction value}
+\end{center}
+As shown above, the syntax comprises of just three terms. Variables, such as $x$ are terms; abstraction of a variable $x$ over a term \tm{t}{} (this is akin to a function definition with one parameter $x$, which returns \tm{t}{}); and application of a term to another term \tm{t}{} \tm{}{} (this is akin to function application). The only ``value'' in \lambdacalc{} (that is, an expression that cannot be evaluated further) is abstraction itself. Note that unlike other programming languages, \lambdacalc{} does not have any built-in constants or primitives such as numbers or conditionals.
+
+``Computation'' is reflected by evaluating the terms of an expression to obtain a simpler expression. The primary evaluation rule in \lambdacalc{} is an evaluation of function application. If an expression contains a function application of some term \tm{t}{1} to a lambda abstraction \tm{t}{2}, then this can be evaluated by replacing all occurrences of the abstraction variable in \tm{t}{2} with \tm{t}{1}. This substitution is written as [$x \mapsto$ \tm{t}{1}]\tm{t}{2}, which reads as ``replace all free occurrences of $x$ in \tm{t}{2} by \tm{t}{1}'' (\cite{pierce}). For example, the term (\abs{$x$}{$x$})$y$ consists of an application of the variable $y$ to the function \abs{$x$}{$x$}. This function simply returns the argument provided, and so the term (\abs{$x$}{$x$})$y$ would evaluate to just $y$.
+
+This evaluation rule can be more formally expressed using inference rules (see \hyperref[sec:AppA]{Appendix A} for a summary of this notation):
+\begin{align*}
+\inference[E-App1: ]{
+  \tm{t}{1} \ \tm{t}{2} \\
+  \tm{t}{1} \longrightarrow \tm{t'}{1}
+}{\tm{t}{1} \ \tm{t}{2} \longrightarrow \tm{t'}{1} \ \tm{t}{2}}
+\quad
+\inference[E-App2: ]{
+  \tm{v}{1} \ \tm{t}{2} \\
+  \tm{t}{2} \longrightarrow \tm{t'}{2}
+}{\tm{v}{1} \ \tm{t}{2} \longrightarrow \tm{v}{1} \ \tm{t'}{2}}
+\end{align*}
+\begin{align*}
+\textnormal{\small E-AppAbs: }(\lambda x.\tm{t}{12})\tm{v}{2} \longrightarrow [x \mapsto \tm{v}{2}]\tm{t}{12}
+\end{align*}
+The notation \tm{t}{} $\longrightarrow$ \tm{t'}{} means that the term \tm{t}{} can be evaluated to \tm{t'}{}. Essentially, ``$\longrightarrow$'' represents a `computation' step. Here, the rule \textbf{E-App1} tells us that the term \tm{t}{1} \tm{t}{2}, where \tm{t}{1} $\longrightarrow$ \tm{t'}{1}, evaluates to \tm{t'}{1} \tm{t}{2}. Although it appears to be obvious, it is important because it specifies the order of computation: before the function application \tm{t}{1} \tm{t}{2} can be performed, the term \tm{t}{1} needs to be fully evaluated.
+
+Similarly, the rule \textbf{E-App2} tells us that the expression \tm{v}{1} \tm{t}{2}, where \tm{t}{2} $\longrightarrow$ \tm{t'}{2}, evaluates to \tm{v}{1} \tm{t'}{2}. Here, the (meta-)variable \tm{v}{1} stands for a \textit{value} rather than a term, meaning that it cannot be evaluated any further. In other words, before the function application \tm{v}{1} \tm{t}{2} can be performed, the term \tm{t}{2} needs to be fully evaluated. Finally, the rule \textbf{E-AppAbs} tells us how to perform the function application, which is to perform a substitution.
+
+\subsection{Simply-Typed Lambda Calculus}
+\label{sec:STLC}
+
+\lambdacalc{} can be extended with types to obtain the STLC. To demonstrate typing, we will add the boolean type to it. First, we extend the syntax:
+\begin{center}
+\texttt{t ::=} 								\hfill \textit{terms:} \\
+\hspace{2em} ... 							\hfill \textit{(previous terms)} \\
+\hspace{2em} | true							\hfill \textit{true} \\
+\hspace{2em} | false	 					\hfill \textit{false} \\
+\hspace{2em} | \abs{$x:\tau$}{\tm{t}{}}		\hfill \textit{lambda abstraction} \\
+\texttt{v ::=} 								\hfill \textit{values:} \\
+\hspace{2em} ... 							\hfill \textit{(previous values)} \\
+\hspace{2em} | true							\hfill \textit{true value} \\
+\hspace{2em} | false						\hfill \textit{false value} \\
+$\tau$ \texttt{::=} 						\hfill \textit{types:} \\
+\hspace{2em} \fn{$\tau$}{$\tau '$}			\hfill \textit{function type} \\
+\hspace{2em} | \Boolt{}						\hfill \textit{boolean type}
+\end{center}
+We have added the two new boolean terms, true and false, both of which are values as well. Aside from that, the lambda abstraction term is also different now; rather than simply $x$, the argument is now written $x:\tau$. The new symbol $\tau$ ranges over the types available in the STLC: the function type \fn{$\tau$}{$\tau '$}, and the newly-added \Boolt{} type. An example of a concrete function type would be \fn{\Boolt{}}{\Boolt{}}. An example of a value belonging to this type would be (\abs{$x:\Boolt{}$}{$x$}).
+
+We can now use typing rules to define the behavior of our new terms and types (see \hyperref[sec:AppA]{Appendix A} for a summary of this notation):
+\begin{align*}
+\inference[T-True: ]{}{\vdash true : \texttt{Bool}}
+\quad
+\inference[T-False: ]{}{\vdash false : \texttt{Bool}}
+\quad
+\inference[T-Var: ]{
+  x:\tau \in \Gamma
+}{\Gamma \vdash x:\tau}
+\end{align*}
+\begin{align*}
+\inference[T-Abs: ]{
+  \Gamma, x:\tau \vdash \tm{t}{}:\tau '
+}{\Gamma \vdash \lambda x:\tau.\tm{t}{} : \tau \rightarrow \tau '}
+\quad
+\inference[T-App: ]{
+  \Gamma \vdash \tm{t}{1} : \tau \rightarrow \tau ' \\
+  \Gamma \vdash \tm{t}{2} : \tau
+}{\Gamma \vdash \tm{t}{1} \tm{t}{2} : \tau '}
+\end{align*}
+The first three rules are straightforward: true and false are of type \Boolt{}, and if $x:\tau$ is in the context $\Gamma$, then $x$ is of type $\tau$ under that context. The rule \textbf{T-Abs} describes typing for lambda abstractions: the abstraction variable $x:\tau$ is added to the context $\Gamma$ (because the variable might appear in the term \tm{t}{}), and given that the term \tm{t}{} is of type $\tau '$, then we can conclude that a lambda abstraction of the form (\abs{$x:\tau$}{\tm{t}{}}) is of type \fn{$\tau$}{$\tau '$} (since \tm{t}{} is the return value of the abstraction). \textbf{T-App} states that a term of type \fn{$\tau$}{$\tau '$} can be applied to a term of type $\tau$, resulting in a term of type $\tau '$.
+
+In this manner, by extending the syntax and grammar to add new terms and types, and defining typing rules for the behavior of those terms and types, we can extend the STLC to add new features to it. Before extending it with OOP features, we will first consider how type inference may be performed on the STLC developed so far.
+
+\subsection{Type Inference as Constraint Satisfaction}
+
+One common technique for performing type inference on the STLC (and FP languages derived from STLC) is to model it as a Constraint Satisfaction Problem. A \textit{constraint} between two types $\tau$ and $\tau '$ (denoted $\tau \sim \tau '$) simply states that the two types must be \textit{unified}, or in other words, they should be equal to each other. A \textit{constraint set} (usually denoted $C$) is a list of such constraints for a given program (where type annotations may be partially or completely absent). A \textit{unification} function is one which generates a substitution that satisfies all constraints in $C$ (\cite{splinter3}). In other words, it finds a solution to the constraint satisfaction problem.
+
+For example, consider the following function written without type annotations (in a common FP language):
+\begin{lstlisting}[label=lst:CSP,language=Haskell,caption=Constraint-based Inference]
+f x = x + x
+\end{lstlisting}
+The job of the inference algorithm is to infer the type of the variable $x$ and the function $f$. First, because we do not yet know the types of these terms, we will assign type variables to them, so that $x:\tau_0$ and $f:\tau_1$. Next, we analyze the body of the function, which consists of a single operation, $x$ + $x$. We assign this expression a type variable as well, so that $(x + x):\tau_2$. Since $f$ is a function whose argument is $x$ and return value is ($x$ + $x$), we can generate the constraint $\tau_1 \sim$ (\fn{$\tau_0$}{$\tau_2$}). We know that the operator `+' takes two values of type \Intt{}, so we can generate the constraint $\tau_0 \sim \Intt{}$ (in fact, we would generate two constraints for both the left-hand and right-hand side of the operator. However, this is a special case since the same variable appears on both sides). We also know that the `+' operator returns a value of type \Intt{} (the arithmetic sum of the left and right hand sides), so we have the constraint $\tau_2 \sim \Intt{}$. Altogether, we have the following constraints:
+\begin{align*}
+C = \{\tau_1 \sim (\tau_0 \rightarrow \tau_2), \tau_0 \sim \Intt{}, \tau_2 \sim \Intt{}\}
+\end{align*}
+To solve these, we can substitute the type \Intt{} for $\tau_0$ and $\tau_2$ to satisfy all constraints. Since $x: \tau_0$ and $f: \tau_1$, we can infer that $x: \Intt{}$ and $f: \Intt{} \rightarrow \Intt{}$.
+
+A constraint-based inference algorithm is one which can be employed to generate constraints in this manner and perform unification to infer types (\cite{krishnamurthi2019}). An example is the Damas-Hindley-Milner algorithm (\cite{damas}; \cite{hindley}; \cite{milner}), which forms the basis of most inference algorithms used in statically typed FP languages. One important characteristic of Damas-Hindley-Milner inference is its completeness - it can infer the types of \textit{all} terms within a given program, without any annotations or hints. This is known as \textit{global} or \textit{full} type inference, as opposed to \textit{partial} type inference which can only infer the types of some terms. The other notable characteristic of Damas-Hindley-Milner inference is that it infers the \textit{principal type}, that is, the most general type that encompasses all possible types for a given expression. Both properties are considered desirable in any type system.

@@ -1,0 +1,23 @@
+\section{Parametric Polymorphism}
+
+\subsection{System F}
+
+Parametric polymorphism is when a data type, such as a function, can be written generically such that it can handle values independent of their type (\cite{pierce}). Such types are also known as generic data types. The following is an example of parametric polymorphism in Java:
+\begin{lstlisting}[label=lst:GenProg,caption=Generic Programming in Java]
+public <T> ArrayList<T> wrap(T value) {
+    ArrayList<T> list = new ArrayList<T>();
+    list.add(value);
+    return list;
+}
+\end{lstlisting}
+This function simply wraps a value of type \texttt{T} into an \texttt{ArrayList} and returns the list. Note that the \texttt{ArrayList} data structure is itself a generic data type. This demonstrates the expressiveness and power of parametric polymorphism: functions no longer need to be bound by any one specific type. Rather, they can be expressed for any type \texttt{T}. We call \texttt{T} a \textit{type variable}.
+
+STLC can be extended to support parametric polymorphism. STLC with parametric polymorphism is also known as System F (\cite{girard}; \cite{reynolds}). We have seen in the example above that parametric polymorphism is simply the introduction of a special variable that ranges over \textit{types} instead of \textit{terms}. Thus, the formulation of System F can be achieved by introducing a new form of abstraction that takes a type variable as its argument, and returns a concrete type formed using that variable. A complete understanding of System F is not necessary to understand the following section (although for completeness, the formal syntax and rules can be found in \hyperref[sec:AppB]{Appendix B}).
+
+\subsection{Type Inference in System F}
+
+The concepts of reducibility and undecidability are important to understand why type inference is difficult (in fact, impossible) in System F. A problem A is \textbf{reducible} to B if there is a way to convert any given instance of A to an instance of B. A problem is \textbf{undecidable} if there is no general algorithm to determine the answer for a given instance of the problem. Furthermore, if A is reducible to B, and B is undecidable, then A is also undecidable (\cite{hopcroft}).
+
+It has been proven that, in System F, the problem of type inference is undecidable. This was proven by \cite{wells} by showing that type inference in System F can be reduced to another problem known as the semi-unification problem, which had already been proven to be undecidable (\cite{kfoury}). While the proof itself is beyond the scope of this essay, this reduction implies that global type inference is not possible in a type system that supports parametric polymorphism. Not only that, it has also been shown that in many cases, even partial type inference is undecidable for System F (\cite{boehm1985}; \cite{boehm1989}).
+
+Given the benefits and expressiveness of parametric polymorphism, most typed OOP languages choose to give up on global type inference in favor of this feature. Other languages, such as Haskell, allow a restricted form of parametric polymorphism where type inference is still possible (\cite{pierce}).

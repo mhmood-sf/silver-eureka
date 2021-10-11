@@ -1,0 +1,16 @@
+\section{Ad-Hoc Polymorphism}
+
+Ad-Hoc polymorphism allows overloading of functions and operators to different types (\cite{pierce}). A common example would be overloading the `+' operator to work on both integers (as an arithmetic operator) as well as String types (as a concatenation operator).
+
+The issues this poses to type inference are straightforward. Consider the function from Listing~\ref{lst:CSP}:
+\begin{lstlisting}
+f x = x + x
+\end{lstlisting}
+Assuming the `+' operator is overloaded for both integers and Strings, both of the following lines are valid:
+\begin{lstlisting}
+f 1 // == 2
+f "hi" // == "hihi"
+\end{lstlisting}
+The function \texttt{f} can be applied to both \texttt{integers} and \texttt{strings}. In other words, the variable \texttt{x} can now belong to two different types depending on the argument provided. This is similar to the problem faced with subtype polymorphism, making type inference difficult.
+
+Ad-hoc polymorphism is another feature popular with OOP languages, but can also be found in some strongly typed functional programming languages, such as Haskell. These languages introduce more complex constructs such as typeclasses (\cite{osullivan}) that allow overloading of functions without sacrificing type inference. However, typeclasses are not very suitable for type systems supporting the OOP paradigm.

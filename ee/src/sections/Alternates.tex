@@ -1,0 +1,17 @@
+\section{Alternative Techniques}
+
+Despite these challenges, there are several techniques for performing (partial) type inference in OOP languages. One increasingly common technique is \textit{local type inference} (\cite{pierceturner}). Compared to the full type inference of Damas-Hindley-Milner, local type inference is very much limited. This technique recovers type information from adjacent nodes of the abstract syntax tree (the internal representation of a program, as a tree structure) after the parsing stage of the compiler (\cite{pierce}), when possible. This allows it to perform simple inferences, such as in variable declarations. Numerous modern OOP languages, such as Java, Scala, Visual Basic, C\# etc. use a form of local type inference. For example, Java introduced the \texttt{var} keyword which enables local type inference in variable declarations, so that code such as the following:
+\begin{lstlisting}
+HashMap<String, String> map = new HashMap<String, String>();
+\end{lstlisting}
+Can be shortened to:
+\begin{lstlisting}
+var map = new HashMap<String, String>();
+\end{lstlisting}
+In such cases, the inference engine can observe the type of the expression on the right-hand side of the assignment operator (provided the expression is simple enough) and assign it to the variable on the left-hand side, without requiring any annotations for it. Even though local type inference lacks completeness and the principal type property, it can still provide surprisingly sufficient inference in many cases, and reduce verbosity.
+
+Aside from this, other more powerful techniques have also been developed. For example, \textit{bidirectional type inference} (\cite{pierceturner}), implemented in the Swift programming language (\cite{toni}). In this technique, type information is propagated further in both the backwards and forwards direction from the nodes of a syntax tree, allowing for more powerful type inference.
+
+\textit{Algebraic subtyping} (\cite{dolan}) is another powerful type inference technique that allows inference under the presence of subtyping. Although type inference for simple subtypes had been possible to some extent (\cite{mitchell}), algebraic subtyping is notable in that it extends Damas-Hindley-Milner inference to provide full support for subtyping, while retaining the principal type property (\cite{parreaux}).
+
+Although a detailed discussion of these techniques is beyond the scope of this essay, they highlight the possibilities of type inference in OOP languages.

@@ -1,4 +1,0 @@
-# mandarin ab initio
-
-pain.
-

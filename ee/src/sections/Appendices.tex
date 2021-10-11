@@ -1,0 +1,139 @@
+\section{Appendices}
+
+% APPENDIX A, NOTATION ================
+\subsection{Appendix A: Notation}
+\label{sec:AppA}
+
+\subsubsection*{Backus-Naur Form}
+BNF is a commonly used notation for expressing the syntax of programming languages (called a \textbf{grammar}). Essentially, it is a set of rules that can be used to generate strings that follow the syntax defined by the grammar (or in other words, syntactically valid strings) (\cite{nystrom}). BNF consists of:
+\begin{itemize}
+\item \textbf{Terminal} symbols, which are literal values of the string generated.
+\item \textbf{Non-terminal} symbols, which are used to reference other rules of the grammar.
+\item \textbf{Productions}, which are the rules themselves. Each production is of the form $LHS ::= RHS;$, where the $LHS$ is a non-terminal symbol, and the $RHS$ is a sequence of either terminal or non-terminal symbols.
+\end{itemize}
+
+For example, the following could be a BNF grammar defining the signature for methods in a Java-like programming language:
+{\small \begin{align*}
+\texttt{Sig}        \quad&\texttt{::= Visibility Access Type Name `(' Params `);' ;}   \\
+\texttt{Visibility} \quad&\texttt{::= `public' | `protected' | `private' ;}            \\
+\texttt{Access}     \quad&\texttt{::= `static' | `' ;}                                 \\
+\texttt{Type}       \quad&\texttt{::= `boolean' | `byte' | `char' | `int' | `float' ;} \\
+\texttt{Name}       \quad&\texttt{::= `A' | ... | `Z' | `a' | ... | `z' | Name ;}      \\
+\texttt{Params}     \quad&\texttt{::= Name | Name `,' Params ;}
+\end{align*}}
+The pipe symbol (`\texttt{|}'), read as `or', separates the sequences of a production. We are allowed to choose whichever we want. Terminal symbols are enclosed within quotes to differentiate them from non-terminal symbols. Note that this change is for simplicity only; in the grammar for \lambdacalc{} (and use of this notation elsewhere in this essay), quotes do not enclose non-terminal symbols.
+
+To generate a string from this grammar, we start from the rule \texttt{Sig}. It tells us to go to the rule \texttt{Visibility}, which has three non-terminals. We choose, for example, the first one, `public'. Now our string is: \texttt{public Access Type Name `(' Params `);'}. We then look at \texttt{Access}, which is either `static' or the empty string. Choosing the first one again, we have: \texttt{public static Type Name `(' Params `);'}. Similarly for \texttt{Type}, if we choose `boolean', we then have: \texttt{public static boolean Name `(' Params `);'}. For \texttt{Name}, notice that it contains the entire english alphabet, and then recursively references itself. This allows us to generate any sequence of letters to form a name. We can choose, say, `isEqual'. We thus have: \texttt{public static boolean isEqual `(' Params `);'}. For \texttt{Params}, we can have either one \texttt{Name}, or a recursively generated sequence of \texttt{Name}s separated by a comma, for example `a, b'. We then have: \texttt{public static boolean isEqual `(' a, b `);'}. Putting it together, we get: \texttt{public static boolean isEqual(a, b);}.
+
+\subsubsection*{Inference Rules}
+In logic, inference rules are a form of syntactic expressions which take a number of \textit{premises}, written above a horizontal bar, and return a conclusion based on those premises (\cite{splinter1}). The prime example is the \textit{modus ponens}, which takes two premises, $p$ and $p \implies q$ (if $p$ then $q$), to return the conclusion, $q$:
+\begin{align*}
+\inference[modus ponens: ]{
+  p \\
+  p \implies q
+}{q}
+\end{align*}
+This rule can be read as ``given $p$ and $p \implies q$, then we can conclude $q$''. If there are no premises given above the horizontal bar, then the conclusion under the bar is considered an \textit{axiom}, that is, it is considered to always hold.
+
+\subsubsection*{Turnstile}
+The turnstile (`$\vdash$') is also a feature from a logic system (namely sequent calculus) which is used to separate assumptions (appearing on the left) from propositions (appearing on the right). It means that the proposition on the right can be derived or deduced from the assumptions on the left. The symbol $\vdash$ can be read as `yields' or `entails'. Multiple assumptions may appear on the left side, but only one proposition can appear on the right (\cite{kleene}). As an example: $p, p \implies q \vdash q$ reads `$p$ and $p \implies q$ yields $q$', which is valid since $q$ can be directly derived from the assumptions.
+
+\subsubsection*{Typing Context}
+A typing context, usually denoted $\Gamma$, is a set containing the declarations of variables and their types. For example, $\Gamma = \{x:\Intt{}, f:\Intt{} \rightarrow \Boolt{}\}$ is an example of a typing context (\cite{pierce}).
+
+\subsubsection*{Typing Judgments and Typing Rules}
+A typing judgment is essentially an assertion telling us the type of an expression once it is fully evaluated (\cite{pierce}). For example, $1+1:\Intt{}$ is a typing judgment telling us that the expression $1+1$, once evaluated, has the type \Intt{}. 
+
+However, we often come across expressions such as $x+1$, where we have a variable whose type we do not know. These expressions have to be considered with respect to some typing context which can tell us the types of the variables appearing in it.
+
+We can define the following inference rule to say that if the variable $x$ and its type $\tau$ is in the context, then we are allowed to conclude that in an expression containing the variable $x$, the type of $x$ is $\tau$:
+\begin{align*}
+\inference{
+  x:\tau \in \Gamma
+}{\Gamma \vdash x:\tau}
+\end{align*}
+Inference rules such as this which combine typing judgments are commonly referred to as typing rules.
+
+Going back to our example of the expression $x+1$, if we have the context $\Gamma = \{x:\Intt{}\}$, then we can assert the type of $x+1$ with the judgment $\Gamma \vdash x + 1 : \Intt{}$, since $\Gamma$ now contains the type of $x$.
+
+In this manner, by combining typing judgments with the turnstile notation, we can write the judgment $\Gamma \vdash e:\tau$ to say that, under the assumption that $\Gamma$ contains the types of all variables occurring in $e$, we can assert that $e$, once evaluated, has the type type $\tau$.
+
+% APPENDIX B ==========================
+
+\subsection{Appendix B: System F Rules}
+\label{sec:AppB}
+
+To extend \lambdacalc{} with polymorphism, we make two new additions: \textbf{type variables}, which are similar to normal variables except that they range over all \textit{types} rather than \textit{values}, and \textbf{polymorphic types}, which are types that contain type variables (\cite{sorensen}).
+
+\pagebreak
+These additions require new syntax for types:
+\begin{center}
+$\tau$ \texttt{::=} 						\hfill \textit{types:} \\
+\hspace{2em} \texttt{X}						\hfill \textit{type variable} \\
+\hspace{2em} | \texttt{$\forall$X.$\tau$}	\hfill \textit{polymorphic type} \\
+\hspace{2em} | \fn{$\tau$}{$\tau '$}		\hfill \textit{function type} \\
+\hspace{2em} | \Boolt{}						\hfill \textit{boolean type}
+\end{center}
+Listing~\ref{lst:GenProg} already gives an example of a type variable. An example of a polymorphic type would be \texttt{$\forall$X.}\fn{\texttt{X}}{\texttt{X}}. A function with such a type would accept a value of any type, and return a value of the same type (this is similar in nature to the identity function - in fact, it turns out that any function with the type \texttt{$\forall$X.}\fn{\texttt{X}}{\texttt{X}} will be equivalent to the identity function!).
+
+We also update the syntax for terms in order to allow type abstraction and application:
+\begin{center}
+\texttt{t ::=} 								\hfill \textit{terms:} \\
+\hspace{2em} ... 							\hfill \textit{(previous terms)} \\
+\hspace{2em} | $\Lambda$\texttt{X.t}		\hfill \textit{type abstraction} \\
+\hspace{2em} | \texttt{t $\tau$}			\hfill \textit{type application}
+\end{center}
+Type abstractions are again similar to normal abstractions, but with type variables instead of normal variables - the term $\Lambda$\texttt{X.t} introduces a new type variable \texttt{X}, abstracted over the term \texttt{t} (similar to the type variable \texttt{T} abstracted over the method \texttt{wrap} in Listing~\ref{lst:GenProg}). We can now write a \textit{generic} identity function using type abstractions:
+\begin{center}
+\texttt{let id =} $\Lambda$\texttt{X.}\abs{$x:$ \texttt{X}}{$x$}
+\end{center}
+This is equivalent to the following Java program:
+\begin{lstlisting}[label=lst:GenId,caption=Generic Identity Function in Java]
+public <T> T identity(T x) {
+	return x;
+}
+\end{lstlisting}
+This type abstraction can then be applied to \textit{instantiate} the polymorphic type with a concrete type. For example, `\texttt{id Int}' applies the type \Intt{} to our generic \texttt{id} function. The type variable is then replaced with the specific type, in this case giving us \texttt{id : Int $\rightarrow$ Int}. In Java, this is analogous to supplying our generic method with a specific type when calling it:
+\begin{lstlisting}[label=lst:GenIns,caption=Generic Identity Function in Java]
+identity<int>(1); // The type variable T is replaced with `int'.
+\end{lstlisting}
+
+The typing rules for type abstraction and application are as follows:
+\begin{align*}
+\inference[Ty-TyAbs: ]{
+  \Gamma \vdash \tm{t}{} : \tau
+}{\Gamma \vdash \Lambda \texttt{X.}\tm{t}{} : \forall \texttt{X.}\tau}
+\quad \quad
+\inference[Ty-TyApp: ]{
+  \Gamma \vdash \tm{t}{} : \forall \texttt{X.}\tau
+}{\Gamma \vdash \tm{t}{}\ \tau' : [\texttt{X} \mapsto \tau']\tau}
+\end{align*}
+The first rule describes type abstraction: $\Lambda$\texttt{X.t} has type \texttt{$\forall$X.$\tau$} if \tm{t}{} has type $\tau$. The second describes type application: if a term \tm{t}{} has the type \texttt{$\forall$X.$\tau$}, then the type application \tm{t}{} $\tau'$ has the type $[\texttt{X} \mapsto \tau']\tau$, that is, the type obtained when $\tau'$ is substituted for the type variable \texttt{X}.
+
+These rules form the basis of System F, and outline how it is equivalent to generic programming patterns in mainstream programming languages.
+
+\subsection{Appendix C: Subtyping for Record Types}
+\label{sec:AppC}
+
+\subsubsection*{Evaluation Rules for Records}
+
+The relevant evaluation rules for records are as follows:
+\begin{align*}
+\inference[E-Proj: ]{
+  \tm{t}{1} \longrightarrow \tm{t'}{1}
+}{\tm{t}{1}.\tm{l}{} \longrightarrow \tm{t'}{1}.\tm{l}{}}
+\quad \quad 
+\textnormal{E-ProjRcd: }\texttt{\{\sb{l}{$i$}=\sbsp{v}{$i$}{$i \in 1..n$}\}.\sb{l}{j}} \longrightarrow \texttt{\sb{v}{$j$}}
+\end{align*}
+\textbf{E-Proj} tells us to fully evaluate a record term before applying projection, while \textbf{E-ProjRcd} tells us that a projection of some label \tm{l}{$j$} on a record evaluates to the corresponding value \tm{v}{$j$} of the field identified by the label. For example, \texttt{\{x:true\}.x} evaluates to \texttt{true}.
+
+\subsubsection*{Basic Subtyping Rules}
+
+The following transitivity and reflexivity rules can be derived straightforwardly from the Liskov substitution principle (that a supertype may be safely substituted with its subtype in any context):
+\begin{align*}
+\inference[S-Trans: ]{
+  \texttt{S <: T} \quad \quad \texttt{T <: U}
+}{\texttt{S <: U}}
+\quad \quad
+\textnormal{S-Refl: } \texttt{S <: S}
+\end{align*}

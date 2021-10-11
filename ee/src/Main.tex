@@ -1,0 +1,173 @@
+\documentclass[12pt,a4paper]{article}
+
+% Font style + encoding
+\usepackage[T1]{fontenc}
+\usepackage{newpxtext,newpxmath}
+
+% Packages
+\usepackage{amsmath}	% ams
+\usepackage{amsfonts}	% ams
+\usepackage{amssymb}	% ams
+\usepackage{hyperref}	% refs/links
+\usepackage{semantic}	% inference rules
+\usepackage{setspace}	% double spacing
+
+% Hyperrefs in Table of Contents
+\hypersetup{
+	colorlinks=true,
+	linktoc=all,
+	linkcolor=blue,
+	citecolor=blue
+}
+
+% References
+\usepackage[style=mla,backend=biber]{biblatex}
+\addbibresource{references.bib}
+
+% Paragraph formatting
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+% Code formatting
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+% Commands
+\newcommand{\lambdacalc}{$\lambda$-calculus}
+\newcommand{\tm}[2]{\texttt{#1\textsubscript{#2}}}
+\newcommand{\fn}[2]{#1 $\rightarrow$ #2}
+\newcommand{\abs}[2]{$\lambda$#1.#2}
+\newcommand{\sbsp}[3]{#1\textsubscript{#2}\textsuperscript{#3}}
+\newcommand{\rcrdv}[4]{\texttt{\{\sb{#1}{#3}=\sbsp{#2}{#3}{#4}\}}}
+\newcommand{\rcrdt}[4]{\texttt{\{\sb{#1}{#3}:\sbsp{#2}{#3}{#4}\}}}
+\newcommand{\Boolt}{\texttt{Bool}}
+\newcommand{\Intt}{\texttt{Int}}
+\newcommand{\subt}[2]{\texttt{#1 <: #2}}
+\renewcommand{\sb}[2]{#1\textsubscript{#2}}
+\renewcommand{\sp}[2]{#1\textsuperscript{#2}}
+
+% =====================================
+% DOCUMENT
+% =====================================
+
+\begin{document}
+
+% Title Page ==========================
+
+\begin{titlepage}
+\begin{center}
+
+\Large
+\textbf{IB Computer Science}
+
+\large
+\textbf{Extended Essay}
+
+\vspace*{4cm}
+
+\large
+\textbf{Topic:}
+
+\normalsize
+Investigating type inference for object-oriented programming languages
+through the lambda calculus.
+
+\vspace{1cm}
+
+\large
+\textbf{Research Question:}
+
+\normalsize
+To what extent is type inference possible for statically typed polymorphic
+object-oriented programming languages?
+
+\vspace{4cm}
+
+Word count: 3996
+
+\vfill
+\vspace{0.1cm}
+
+Candidate Code: \texttt{jky029}
+
+\end{center}
+\end{titlepage}
+
+% Table of Contents ===================
+
+\pagenumbering{roman}
+
+\begin{center}
+\tableofcontents
+\end{center}
+
+\newpage
+
+% INTRODUCTION ========================
+
+\onehalfspacing
+\pagenumbering{arabic}
+
+\include{sections/Introduction}
+
+% LAMBDA CALCULUS =====================
+
+\include{sections/LambdaCalculus}
+
+% FEATURES OF OOP =========
+
+\include{sections/FeaturesOfOOP}
+
+% PARAMETRIC POLYMORPHISM =============
+
+\include{sections/ParametricPolymorphism}
+
+% SUBTYPE POLYMORPHISM ================
+
+\include{sections/SubtypePolymorphism}
+
+% Ad Hoc Polymorphism =================
+
+\include{sections/AdHocPolymorphism}
+
+% ALTERNATE METHODS ===================
+
+\include{sections/Alternates}
+
+% CONCLUSION ==========================
+
+\include{sections/Conclusion}
+
+% APPENDICES ==========================
+
+\include{sections/Appendices}
+
+% BIBLIOGRAPHY ========================
+
+\printbibliography[heading=bibintoc]
+
+\end{document}
+
+% =====================================
+

@@ -1,0 +1,93 @@
+\section{Subtype Polymorphism}
+
+\subsection{Subtyping}
+
+Subtyping is a major characteristic of the OOP paradigm. Like parametric polymorphism, it allows writing code in a more abstract manner. For example, consider the following Java program:
+\begin{lstlisting}[label=lst:SubPol,caption=Subtyping in Java]
+public class Main {
+	public static void main(String[] args) {
+		byte x = 100;
+		short y = 1000;
+		int result = add(x, y);
+		System.out.println(result); // outputs 1100
+	}
+
+	public static int add(int x, int y) {
+		return x + y;
+	}
+}
+\end{lstlisting}
+Although the method \texttt{add} is defined for two parameters of type \texttt{int}, it works for \texttt{byte} and \texttt{short} as well. This is because \texttt{byte} and \texttt{short} are both \textit{subtypes} of the \textit{supertype} \texttt{int}. This means that both \texttt{byte} and \texttt{short} (and all other subtypes of \texttt{int}) can be substituted for \texttt{int} without compromising on the correctness of the program. This particular subtyping relation is commonly known as the Liskov substitution principle (\cite{liskov}), and is an important design principle of OOP. More generally, a type \texttt{S} is a subtype of some type \texttt{T} if any term of \texttt{S} can safely be used in a context where a term of \texttt{T} is expected (\cite{pierce}).
+
+\subsection{Record Types}
+
+Subtype polymorphism is specifically important in OOP because of how it affects the way objects and object types behave. Commonly, an \textit{object} is a ``data structure encapsulating some internal \textit{state} and offering access to this state to clients via a collection of \textit{methods}'' (\cite{pierce} 228). To better understand subtype polymorphism through the STLC under this context, we first need to extend it with a datatype similar to these objects. To do so, we will add the record type to the STLC. Records are simply a collection of terms identified by some label. Although proper object types in more complete programming languages are more complex and nuanced than this, it is sufficient for our purposes.
+
+First, the syntax for record literals and accessing fields of a record (projection):
+\begin{center}
+\texttt{t ::=} 																\hfill \textit{terms:} \\
+\hspace{2em} ... 															\hfill \textit{(previous terms)} \\
+\hspace{2em} | \texttt{\{\sb{l}{$i$}=\sbsp{t}{$i$}{$i \in 1..n$}\}}			\hfill \textit{record} \\
+\hspace{2em} | \texttt{t.l} 												\hfill \textit{projection} \\
+\texttt{v ::=} 																\hfill \textit{values:} \\
+\hspace{2em} ... 															\hfill \textit{(previous values)} \\
+\hspace{2em} | \texttt{\{\sb{l}{$i$}=\sbsp{v}{$i$}{$i \in 1..n$}\}}			\hfill \textit{record value} \\
+$\tau$ \texttt{::=} 														\hfill \textit{types:} \\
+\hspace{2em} ...															\hfill \textit{(previous types)} \\
+\hspace{2em} | \texttt{\{\sb{l}{$i$}:\sbsp{$\tau$}{$i$}{$i \in 1..n$}\}}	\hfill \textit{record type}
+\end{center}
+The notation \texttt{\{\sb{l}{$i$}=\sbsp{t}{$i$}{$i \in 1..n$}\}} is used for a record with $n$ fields, each uniquely labeled. The remaining grammar is straightforward. An example of a record using this syntax would be \texttt{\{x=true, y=false\}}. Relevant evaluation rules can be found in \hyperref[sec:AppC]{Appendix C}.
+
+The relevant typing rules for records are as follows:
+\begin{align*}
+\inference[T-Rcd: ]{
+  \textnormal{for each $i$} \ \ \Gamma \vdash \tm{t}{i}:\tau_i
+}{\Gamma \vdash \texttt{\{\sb{l}{$i$}=\sbsp{t}{$i$}{$i \in 1..n$}\}} : \texttt{\{\sb{l}{$i$}:\sbsp{$\tau$}{$i$}{$i \in 1..n$}\}}}
+\quad
+\inference[T-Proj: ]{
+  \Gamma \vdash \tm{t}{1} : \texttt{\{\sb{l}{$i$}:\sbsp{$\tau$}{$i$}{$i \in 1..n$}\}}
+}{\Gamma \vdash \tm{t}{1}.\tm{l}{j} : \tau_j}
+\end{align*}
+The rule \textbf{T-Rcd} tells us that a record \texttt{\{\sb{l}{$i$}=\sbsp{t}{$i$}{$i \in 1..n$}\}} where each term of a field \tm{t}{$i$} has some type $\tau_i$ will have the type \texttt{\{\sb{l}{$i$}:\sbsp{$\tau$}{$i$}{$i \in 1..n$}\}}. For example, the record \texttt{\{x=true, y=false\}} has two fields \texttt{x} and \texttt{y} of type \Boolt{}. The type of this record would then be \texttt{\{x:Bool, y:Bool\}}. The rule \textbf{T-Proj} simply tells us that the type of a projection will be the type of the corresponding field.
+
+For convenience, we will make use of \texttt{let}-syntax to bind terms to a name, like so: \texttt{let id = }\abs{$x$}{$x$}, and similarly \texttt{type} to bind types to a name.
+
+With the addition of records, the benefits of subtyping in STLC become more apparent. Consider the following function:
+\begin{center}
+\texttt{let f = } (\abs{$r:$\texttt{\{x:Bool\}}}{ $r$.x})
+\end{center}
+The function \tm{f}{} takes a record containing the field $x:$ \Boolt{} and returns the value of that field. However, the following well-behaved term would be considered invalid under the typing rules for function application (see rule \textbf{T-App} in \hyperref[sec:STLC]{subsection 2.2}):
+\begin{center}
+\texttt{f \{x:true, y:false\}}
+\end{center}
+
+The above application fails because, according to our typing rules, the function \texttt{f} can only take terms of the type \texttt{\{x:Bool\}}, while in this case it is being applied to the type \texttt{\{x:Bool, y:Bool\}}. Clearly, the term is well-behaved, because it only requires the argument to have a field \texttt{x} of type \Boolt{}. To overcome this, we introduce subtyping in the lambda calculus.
+
+\subsection{Rule of Subsumption}
+
+Although there is much more to the formalization of subtyping in lambda calculi, in our case we only focus on the aspects relevant to our discussion, namely the subsumption rule. We will assume that a record type \texttt{S} is a subtype of some other record type \texttt{T} if it contains \textit{at least} all the fields contained in \texttt{T}. This is denoted as \subt{S}{T}. Then, we can add the rule of subsumption:
+\begin{align*}
+\inference[T-Sub: ]{
+  \Gamma \vdash \tm{t}{} : \tm{S}{} \\
+  \subt{S}{T}
+}{\Gamma \vdash \tm{t}{} : \tm{T}{}}
+\end{align*}
+This rule simply tells us that a term of some subtype \tm{S}{} also belongs to its supertype \tm{T}{}. For example, \texttt{\{x:true, y:false\}} belongs to both \texttt{\{x:Bool, y:Bool\}} \textit{and} \texttt{\{x:Bool\}}, because \subt{\{x:Bool, y:Bool\}}{\{x:Bool\}}. This solves the problem encountered in the previous section, because now the function \texttt{f} can accept not only the type \texttt{\{x:Bool\}}, but also all of its subtypes.
+
+\subsection{Inference under Subtyping}
+
+A closer look at the subsumption rule also gives us an idea of why inference may be problematic under the presence of subtyping: the term \tm{t}{} now belongs to not just the type \tm{S}{}, but also all subtypes of \tm{S}{}. In other words, the same term belongs to multiple types.
+
+Let us consider the function \texttt{f} defined earlier, but this time without any type annotations:
+\begin{center}
+\texttt{let f = (\abs{$r$}{$r$.x})}
+\end{center}
+Now, due to the rule of subsumption, the variable $r$ could belong to any of an infinite number of types. Given this program, without any type annotations from the programmer, the most we can infer is that \texttt{f} is a function type that takes some record type as its argument, which contains a field \texttt{x}. Needless to say, this is not very practical or useful.
+
+The kind of subtyping discussed so far falls largely under the notion of \textit{structural subtyping}, where the subtype relation between two types is based entirely on their \textit{structure} (for example, the type and number of fields in two record types). A different notion is that of \textit{nominal} subtyping, where a subtype relation may only exist if the programmer explicitly declares one so (\cite{pierce}). This is a common feature in many mainstram OOP languages, and usually includes special syntax as well, for example the \texttt{implements} keyword in Java. Under nominal subtyping, inference becomes even more difficult. Consider the following example:
+\begin{center}
+\texttt{type A = \{x:Bool\}} \\
+\texttt{type B = \{x:Bool\}} \\
+\texttt{let f = (\abs{$r$}{$r$.x})}
+\end{center}
+In this example, even though the types \tm{A}{} and \tm{B}{} are identical, they are seen as entirely different types under nominal subtyping, because we did not declare any subtype relation between them. Thus, even if we were able to infer that $r$ is of type \texttt{\{x:Bool\}}, it would be impossible to determine whether it is of type \tm{A}{} or \tm{B}{} without explicit annotations from the programmer.

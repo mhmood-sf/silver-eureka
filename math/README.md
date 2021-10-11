@@ -1,1 +1,0 @@
-# math analysis & approaches
