@@ -7,7 +7,7 @@ School-related stuff from IB.
 #### HL
 - [Computer Science](/compsci): 7
 - [Mathematics: Analysis & Approaches](/math): 7
-- Physics: 6
+- [Physics](/physics): 6
 
 #### SL
 - [Psychology](/psych): 7
