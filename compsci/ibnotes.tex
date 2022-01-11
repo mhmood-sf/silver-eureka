@@ -1,0 +1,1199 @@
+\documentclass{article}
+
+% TODO: Fix sub/subsubsections for T4 onwards
+
+% Math Packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Refs/Links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linktoc=all,
+    linkcolor=blue,
+    citecolor=blue
+}
+
+% Font and encoding
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+% \usepackage{newpxtext,newpxmath}
+
+% Paragraph formatting
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+% Document details
+\title{\Large \textbf{IB Computer Science Notes}}
+\author{}
+\date{May 2021}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+
+\begin{center}
+    \tableofcontents
+\end{center}
+
+\newpage
+\section*{Note}
+These notes were compiled using content from the textbook ``Core Computer
+Science for the IB Diploma Program'' by Kostas Dimitriou \& Markos Hatzitaskos.
+I've tried to follow the IB CS Guide as closely as possible, and sections and
+subsections are divided according to the guide, as closely as possible (
+subsubsections, however, do not follow the guide).
+
+For topic 4, despite being the largest SL topic, the section has very little
+actual content worth putting into notes. It's mostly just practicing
+algorithms, pseudocode and so on, which is why I'd recommend putting more time
+into practicing, either with past papers or other resources, rather than
+using notes. Do remember to take a look at the IB pseudocode guides
+as well. There are two documents, one regarding pseudocode notation
+conventions, will be available to candidates during the examination,
+and another regarding standard data structures that may appear on external
+examinations. This document will not be available during external examinations.
+
+\newpage
+\section{System Fundamentals}
+
+\subsection{Systems in organization}
+
+\subsubsection{Planning and system installation}
+
+Stages through which the development of a new system passes
+through.
+
+It might generally look like: \\
+\textbf{Analysis} $\rightarrow$ \textbf{Design} $\rightarrow$
+\textbf{Implementation} $\rightarrow$ \textbf{Operation} $\rightarrow$
+\textbf{Maintenance}
+
+\textbf{Context for a new system} \\
+A new system can be created to replace one that is inefficient, redundant or
+outdated. The first stage is planning, which will often require a feasibility
+study for the new system:
+\begin{itemize}
+    \item Technical feasibility: Is the technology sufficient to implement
+        the system?
+    \item Economic feasibility: Is the system cost effective
+    \item Legal feasibility: Does the system adhere to relevant laws and
+        regulations
+    \item Operational feasiblity: Are existing practices and procedures
+        sufficient to support the system?
+    \item Schedule feasibility: How long will the new system take?
+\end{itemize}
+
+\textbf{Change management} \\
+Change management is the process of shifting individuals, teams,
+departments, and organizations from the present to a desired state.
+
+\textbf{Compatibility issues} \\
+Legacy system: Old technology which is now out-dated, but possibly still in
+use by a system due to various reasons such as being difficult to replace due
+to complexity or using data which is incompatible with new data formats etc.
+
+Business merger: the combining of two or more business entities. Has benefits such
+as reduced costs but presents challenges such as ensuring both systems are
+compatible.
+
+\textbf{SaaS} \\
+Software-as-a-Service (SaaS): A software delivery method where the software is
+hosted remotely, and users pay to access it on a subscription basis.
+
+\textbf{System installation processes} \\
+Implementation methods for moving from old to new system:
+\begin{itemize}
+    \item Parallel: both systems work in parallel for a short time, until the
+        transition to the new one is finished.
+    \item Direct: The old one is halted, and the new one is immediately put
+        into place.
+    \item Pilot: the new one is implemented in a smaller part of the
+        organization, and slowly extended over time.
+    \item Phased: parts of the old system are replaced by parts of the new
+        system one by one gradually.
+\end{itemize}
+
+\textbf{Data migration} \\
+Data migration: transfer of data between formats, storage types or computer
+systems.
+
+Issues with data migration include compatibility issues and data loss.
+
+\textbf{Testing} \\
+Functional testing: the specific functions of a program are tested.
+
+Data testing: normal, abnormal and extreme data is provided to the system.
+
+Alpha testing: testing before the software is made public.
+
+Beta testing: tested by initial users and feedback is obtained.
+
+Dry-run testing: conducted using pen-and-paper by the programmers.
+
+Integration testing: Entire system is tested
+
+User acceptance testing: system is tested to see if it satisfied the customers'
+needs.
+
+Debugging: process of finding and correcting bugs in programs.
+
+Validation: evaluating whether data input follows appropriate specifications.
+
+Verification: ensuring data input is the same as the original source data.
+
+\subsubsection{User focus}
+
+\textbf{Documentation} \\
+Internal documentation: documentations embedded within the source code itself
+(comments, types, etc.)
+
+External documentation: usually written as a separate document from the
+program.
+
+\textbf{Providing documentation}
+\begin{itemize}
+    \item Manuals
+    \item Email support
+    \item Embedded assistance or integrated user assistance
+    \item Frequently Asked Questions
+    \item Live chat sessions
+    \item Online web portals
+    \item Remote desktop connections
+\end{itemize}
+
+\textbf{User training}
+\begin{itemize}
+    \item Self-instruction
+    \item Formal classes
+    \item Online training
+\end{itemize}
+
+\subsubsection{System backup}
+
+\textbf{Data loss} \\
+Causes:
+\begin{itemize}
+    \item Accidental deletion
+    \item Administrative errors
+    \item Poor data storage system
+    \item Building fires
+    \item Natural disasters
+    \item Viruses/malware
+    \item Data corruption
+    \item Firmware corruption
+\end{itemize}
+
+Prevention:
+\begin{itemize}
+    \item Regular backups
+    \item Firewall/Anti-virus installation
+    \item Offsite storage
+    \item Removed hard copies
+    \item Failover system: A system that, upon error or failure, is able to switch over
+        to a spare/backup system and continue functioning.
+\end{itemize}
+
+\subsubsection{Software deployment}
+
+\textbf{Software releases and updates}
+\begin{itemize}
+    \item Patches: updates to fix bugs and issues
+    \item Upgrades: Novel functionalities or features as well as bug fixes.
+    \item Updates: Minor upgrade
+    \item Release: Finalised working version of software.
+\end{itemize}
+
+\subsection{System design basics}
+
+\subsubsection{Components of a computer system}
+
+\begin{itemize}
+    \item Hardware: physical elements.
+    \item Software: instructions that can be understood and executed by the
+        CPU.
+    \item Peripheral device: Auxiliary device that can communicate with a
+        computer.
+    \item Computer network: Interconnected computer systems.
+    \item Human resources: people.
+\end{itemize}
+
+\textbf{Roles of a computer}
+\begin{itemize}
+    \item Client: recieves data from a server
+    \item Server: sends data to a client
+    \item Dumb terminal: consists of keyboard, monitor, network card.
+    \item Thin client: low performance terminal.
+    \item Email server: manages flow of email in and out of network.
+    \item Router: accepts incoming data packets, reads their destination address, and
+        distributes them across the network according to a routing policy.
+    \item Domain Name System (DNS) server: attributes names to network addresses and
+        resolves names by assigning them to the appropriate network entity.
+    \item Firewall: hardware or software network infrastructure that controls and
+        limits data flow access among entities. Used to offer protection.
+    \item Client-server: architecture where client and server are connected.
+\end{itemize}
+
+\textbf{Social and ethical issues}
+\begin{itemize}
+    \item Reliability
+    \item Integrity
+    \item Inconsistency
+    \item Security
+    \item Privacy
+    \item Anonymity
+    \item Intellectual property
+    \item Digital divide and equality of access
+    \item Surveillance
+    \item Global and cultural diversity
+\end{itemize}
+
+IT policies: enforceable procedures to ensure appropriate and secure use of a
+computer system.
+
+Standards and protocols: technical rules hardware and software should follow.
+
+People and machines: Internet addiction is a social impact. Use of AI in
+military or law-enforcement situations.
+
+Digital citizenship: appropriate behavior in a digital world.
+
+\subsubsection{System design and analysis}
+
+Stakeholders: individuals, teams or organizations with an interest in the
+project/system/etc.
+
+\textbf{Obtaining requirements from stakeholders}
+\begin{itemize}
+    \item Structured/Unstructured interviews
+    \item Closed/Open questionnaires
+    \item Direct observation.
+\end{itemize}
+
+Gathering information to arrive at a workable solution: examining current
+systems, examining competing products.
+
+Requirements Specification Document: specifies requirements.
+
+\textbf{Illustrating system requirements}
+\begin{itemize}
+    \item Flowcharts
+    \item Data-flow diagrams
+    \item Structure charts
+\end{itemize}
+
+Prototyping: working or non-working preliminary version of product.
+
+Iteration: repeating the process multiple times until arriving at the desired
+point.
+
+\subsubsection{Human interaction with the system}
+
+\begin{itemize}
+    \item Accessiblity: potential of a product to meet the needs of as many
+        individuals as possible.
+    \item Usability: potential of a product to accomplish user goals.
+    \item Ergonomics: design of safe and comfortable products.
+\end{itemize}
+
+\textbf{Components of usability}
+\begin{itemize}
+    \item Simplicity
+    \item Effectiveness
+    \item Efficiency
+    \item Error
+    \item Learnability
+    \item Memorability
+    \item Readability
+    \item Satisfaction
+\end{itemize}
+
+% =============================================================================
+% ====== Computer Organization ================================================
+% =============================================================================
+\section{Computer Organization}
+
+\subsection{Computer organization}
+
+\subsubsection{Computer architecture}
+
+\begin{itemize}
+    \item Control Unit (CU): retrieves instructions from primary memory and
+        handles the sequence of their execution.
+    \item Arithmetic Logic Unit (ALU): performs all basic arithmetic, logic,
+        input/output operations.
+    \item Memory Address Register (MAR): holds memory address of data to be
+        used by the ALU
+    \item Memory Data Register (MDR): holds data to be used by the ALU.
+\end{itemize}
+
+\textbf{Primary memory}
+\begin{itemize}
+    \item Cache: a small amount of fast temporary memory placed between CPU
+        and main RAM, used as cache. Separated into L1 and L2 caches.
+    \item Random Access Memory (RAM): temporary data 
+    \item Read-only memory (ROM): permanent data
+\end{itemize}
+
+\textbf{Instruction cycle} \\
+Known as the fetch-decode-execute cycle:
+\begin{enumerate}
+    \item Fetch instructions from primary memory to CU
+    \item Decode instruction in CU
+    \item Execute instruction
+    \item Store result of execution and check for next instruction
+\end{enumerate}
+
+\subsubsection{Secondary memory}
+
+Secondary memory is a slower type of memory for data storage that can be both
+read to and written from. It is non-volatile. Examples are USBs, hard drives,
+etc.
+
+\subsubsection{Operating and application systems}
+
+\textbf{Functions of an OS}
+\begin{itemize}
+    \item Peripheral communication
+    \item Memory management
+    \item Resource monitoring and multi-tasking
+    \item Networking
+    \item Disk access and data management
+    \item Security
+\end{itemize}
+
+\textbf{Software applications} \\
+Software applications: word processors, spreadsheets, database systems, etc.
+
+GUI: graphical user interface
+
+\subsubsection{Binary representation}
+
+bit: basic unit of information, value of either 0 or 1.
+\begin{align*}
+    1 \text{ byte} = 8 \text{ bits}
+\end{align*}
+
+Number systems: decimal - base 10, binary - base 2, hexadecimal - base 16.
+
+Convert from decimal to binary: repeatedly divide by 2 and keep track of the
+remainders (which will be 0 or 1). The reverse order of the remainders obtained
+is the number in binary.
+
+Covnert from binary to decimal: multiply each digit with its respective
+multiplier and sum the results.
+
+\subsection{Negatives in binary}
+Most significant bit (MSB): the bit having the largest value in a binary
+number.
+
+Least significant bit (LSB): the bit having the smallest value in a binary
+number.
+
+Negative numbers (Two's complement): used to represent signed binary numbers.
+To find a number's two's complement representation, first write the absolute
+value in binary, then invert the bits, then add 1. The largest number possible
+in this system is 127, while the smallest is -128.
+
+Negative numbers (Sign and magnitude representaiton): the left-most bit
+represents the sign, while the rest carries the magnitude.
+
+Binary fractions (fixed-point representation): the number is divided at a
+chosen fixed point. the part to the left of it is the integer part while the
+right is the fractional part. To the left of the fixed point are increasing
+powers of two as per usual, and to the right are decreasing powers, just like
+in the normal decimal system.
+
+Hexadecimal: base-16 system.
+
+ASCII: character-encoding scheme for English alphabet.
+
+Strings: sequence of characters.
+
+Colours: can be represented using hexadecimal RGB colour values - a six-digit
+hexadecimal number where the first two digits represent red, next two green,
+last two blue.
+
+% TODO
+\subsubsection{Simple logic gates}
+[INCOMPLETE]
+
+\section{Networks}
+Definitions:
+\begin{itemize}
+    \item bus topology: computer network in which a `bus' connects all devices
+        together through a common cable.
+    \item cable: wire or fibre used to connect computers in a network.
+    \item check digit: extra digit added to numerical data that is used to
+        check for data integrity after data has been transmitted, stored, input
+        or processed.
+    \item data integrity: accuracy of data
+    \item check sum: error-detecting procedure that generates a sum from the
+        digits of a number.
+    \item data packet: portion of a message that is transmitted through a
+        network. contains data such as check digits and destination address.
+    \item gateway: link residing between computer networks and is responsible
+        for converting data passing through into the appropriate format.
+    \item handshaking: exchange of predetermined signals to signify that a
+        connection has been established.
+    \item hub: network connection point for devices. data arriving at a hub is
+        copied and sent to all connected devices.
+    \item switch: like a hub, but can identify which device is connected to
+        which port, and then transmit data to specific port/device as needed.
+    \item router: connects multiple networks together to form larger networks
+    \item ISDN: integrated services digital network - international
+        communication standard allowing for transmission of audio/video/etc.
+        over digital telephone lines.
+    \item local area network (LAN): network where connected computers are
+        within a limited geographical area.
+    \item microwave transmission: electronic communication without cables.
+    \item modem (modulator/demodulator): converts digital signals into audio
+        signals and back. allows distant communication.
+    \item network: interconnected computer systems, which can share data.
+    \item packet: group of bits.
+    \item packet switching: network communication method that create and
+        transmits small units of data through a network, independetly of the
+        overall message.
+    \item parity bit: error-detecting procedure that appends binary digits to
+        a group of binary digits. the sum of the digits, including the appended
+        digit, establishes the accuracy of the data.
+    \item protocol: international rules that ensure the transfer of data
+        between systems.
+    \item TCP/IP: protocol used to connect hosts to the internet.
+    \item wide area network (WAN): larger geographical area than LAN.
+\end{itemize}
+
+% =============================================================================
+% ========= Networks ==========================================================
+% =============================================================================
+\subsection{Networks}
+
+\subsubsection{Network fundamentals}
+
+\textbf{Types of networks}
+\begin{itemize}
+    \item local area network: connects devices within a limited geographical
+        area, such as an office building or school. one advantage is it allows
+        sharing of peripheral devices (like printers) between devices.
+    \item wireless local area network: like LANs, but wireless. Being wireless
+        is convenient, but one disadvantage is that it is also much less
+        secure compared to LANs.
+    \item virtual local area network: this is used to partition LANs into
+        \textit{logical separate networks}. For example, different departments
+        within the same office might have their own VLAN, allowing the network
+        to be more organized without much costs.
+    \item wide area network: connects devices across a large geographical area.
+        The internet is a WAN.
+    \item storage area network: a network created for accessing large storage
+        devices from servers more conveniently.
+    \item intranet: broad term for a collection of private networks utilizing
+        protocols like TCP/IP. they can be thought of as a more private
+        internet.
+    \item internet: connects a large number of networks together. largest WAN
+        in the world. it is also a decentralized network. no one entity
+        controls the internet.
+    \item extranet: utilizes the internet to allow \textbf{controlled access}
+        by specific users to a specific LAN or WAN.
+    \item internet of things: network of `things' that are able to connect to
+        the internet, e.g. refrigerators, cars, etc.
+    \item virtual private network: allows clients from remote locations to
+        connect to the network and appear to be inside the LAN/WAN as if they
+        were physically present. it is much more secure and can bypass
+        geographical restrictions.
+    \item personal area network: much shorter range; connects devices centered
+        around one individual, e.g. your mobile and drawing tablet and printer
+        and camera and so on.
+    \item peer-to-peer: a network which does not utilize the client-server
+        model. Instead, it is a distributed network where all systems, called
+        nodes or peers, act as both the client and the server at the same time,
+        consuming and supplying resources from and to other devices at the
+        same time.
+\end{itemize}
+
+\textbf{Importance of standards} \\
+Standards enable compatibility through a common `language' and predefined rules
+that all parties agree upon.
+
+\textbf{Communication over networks} \\
+Open Systems Interconnection Model, established by the International Standards
+Organization (ISO). Contains seven layers aimed at facilitating communication
+across systems:
+\begin{itemize}
+    \item Physical: transmits binary data over media between devices. e.g
+        RS232-C.
+    \item Data link: error handling of physical transmission, flow control and
+        handling transmission rates. e.g Ethernet
+    \item Network: handles routing of packets across a network. e.g IP
+    \item -- (Above: Physical communication) -- (Below: Virtual communication)
+    \item Transport: end to end connection (between hosts). this is where data
+        segments are defined, data transfer occurs, and then the data is
+        reassembled at its destination. e.g TCP
+    \item Session: managing sessions between two users. e.g windows system core
+        protocol.
+    \item Presentation: data format information, compression information,
+        encryption information, etc. e.g Portable Network Graphics (PNG)
+    \item Application: performs services consumed by end users. e.g HTTP
+\end{itemize}
+
+TCP/IP Model: Similar to the OSI model, describes functions taking
+place at each layer of protocols within the TCP/IP suite:
+\begin{itemize}
+    \item Network Access: layer 1 and 2 of OSI
+    \item Internet: layer 3 of OSI
+    \item Transport: layer 4
+    \item Application: layers 5, 6 and 7
+\end{itemize}
+
+\textbf{Virtual Private Networks (VPNs)} \\
+All traffic on VPNs is encrypted, authenticated and then sent along virtual
+tunnels. Secure VPN technologies include the internet protocol security
+protocol (IPSec protocol), the Secure Sockets Layer, or Transport Layer
+Security with encryption.
+
+Common VPN types:
+\begin{itemize}
+    \item Site-to-site VPN: Connects entire networks together through gateways,
+        for secure data interchange.
+    \item Remote-access VPN: Connects individual hosts to private networks.
+        Every host has a VPN client software installed.
+\end{itemize}
+
+\textbf{Use of a VPN} \\
+Benefits:
+\begin{itemize}
+    \item Easier communication
+    \item Secure connections
+    \item Remote access
+\end{itemize}
+
+\subsubsection{Data transmission}
+
+\textbf{Necessity of Protocols} \\
+Protocols are important because they define rules about message/data formats,
+error checking methods, data compression and ecnryption/decryption and so on.
+
+Protocols also guarantee:
+\begin{itemize}
+    \item Source integrity: identity of the sender has been validated
+    \item Flow control: Controlling the rate of data transmission to prevent
+        overload of resources while also maintaining efficiency
+    \item Congestion management: Handling congestions which occur when requests
+        to the network exceed the offered capacity
+    \item Deadlock prevention: preventing situations where two or more networks
+        are waiting for the other to finish the process, thus neither is able
+        to finish.
+    \item Error checking and correction: determining if an error has occurred,
+        and recovering data lost is possible.
+\end{itemize}
+
+\textbf{Factors that affect speed of data transmission}
+\begin{itemize}
+    \item Bandwidth of network
+    \item Data transfer rate of storage devices
+    \item Interferences
+    \item Malicious software
+    \item Packet loss and retransmission
+\end{itemize}
+
+\textbf{Data compression}
+\begin{itemize}
+    \item Lossy: some loss of information is acceptable, and there is no way to
+        retrive the original data.
+    \item Lossless: reduces the number of bits by identifying redundant data
+        and encoding it in a more compact format to save space without losing
+        the original data.
+\end{itemize}
+
+\textbf{Packet switching} \\
+A data packet is a unit of information in a form suitable for transferring
+between computers.
+
+Packet switching is a method where data is grouped into packets. The original
+file is divided into packets, each of which may follow a different path to the
+destination.
+
+\subsubsection{Wireless Networking}
+
+Advantages:
+\begin{itemize}
+    \item Less hassle and possibly costs
+    \item Easy to access
+\end{itemize}
+Disadvantages:
+\begin{itemize}
+    \item Relatively low speed
+    \item Less secure and higher error rates
+\end{itemize}
+
+% TODO
+\textbf{Hardware components of a wireless network}
+\begin{itemize}
+    \item [INCOMPLETE]
+\end{itemize}
+
+% TODO
+\textbf{Software components of a wireless network}
+\begin{itemize}
+    \item [INCOMPLETE]
+\end{itemize}
+
+\textbf{Methods of network security}
+\begin{itemize}
+    \item Passwords
+    \item Antivirus program
+    \item Firewall (software/hardware)
+\end{itemize}
+
+\textbf{Encryption} \\
+Encryption: Uses mathematical algorithms and encryption keys to protect data.
+In symmetric-key encryption, the same key is used for encryption and
+decryption. Public-key encryption uses a public key which is available to
+everyone for encryption, and a private key for decryption. Both are
+mathematically linked. This is used on the internet, such as TLS and SSL
+protocols.
+
+% =============================================================================
+% ====== Coputational thinking ================================================
+% =============================================================================
+\section{Computational Thinking}
+
+\subsection{General principles}
+
+\subsubsection{Algorithms}
+Algorithms are a series of instructions designed to solve a problem.
+Algorithms can be expressed in different ways, for example with natural
+language, flow charts or diagrams, pseudocode or programming languages.
+
+Algorithms are (often) procedural, that is, they follow a set of given
+instructions one by one. They may also include sub-procedures, which break the
+problem into smaller sub-problems and solve them one by one, in order to more
+easily solve the original problem at hand.
+
+Algorithms can consist of conditionals for decision-making, iteration
+constructs for repeating tasks, inputs and outputs for manipulating or
+consuming data, pre-conditions (data and information needed before a procedure
+is called) and post-conditions (after a procedure finishes), exceptions (events
+that might disrupt the flow of the algorithm's execution) and so on.
+
+\textit{Concurrency} means something happening at the same time as something
+else. In terms of computation, it refers to instructions being processed at
+the same time. Here, procedures are broken into sub-procedures that can be
+handled concurrently by processors. This helps efficiency but requires more
+planning and coordination.
+
+\textit{Abstraction} refers to when unnecessary low-level implementation
+details of something are hidden, and only the relevant and fundamental parts
+of it are considered.
+
+\textit{Object-oriented programming} uses abstraction by representing entities
+as programming objects. These objects describe the data/properties and
+behavior/methods of the entity it represents.
+
+\textit{Variables} are identifiers that can be used to reference values stored
+in the computer, during program execution.
+
+\subsection{Connecting computational thinking and program design}
+
+\subsubsection{Linear arrays}
+Linear arrays are one-dimensional arrays that can store multiple
+values, unlike variables.
+
+\textit{Sequential search:} goes through each item one by one until the search
+is successful or there are no more items.
+
+\textit{Binary search:} works on sorted lists by dividing them into half at
+each iteration and recursively searching through the sublist containing larger
+or smaller elements depending on the search value
+
+\textit{Bubble sort:} sorting algorithm; repeatedly steps through the array,
+compares adjacent elements and puts them in order. makes multiple passes until
+no swaps are necessary and the array is sorted. slow and impractical algorithm.
+
+\textit{Selection sort:} sorting algorithm; divides the input array into two
+sub-arrays, one containing the sorted elements, the other unsorted elements. At
+first, the size of the first sub-array is 0. The algorithm goes through the
+unsorted array looking for the max/min element and places it at the leftmost
+position, next to the sorted array, and then extends the borders of the sorted
+array. it then repeats until the size of the unsorted array is 0.
+
+\subsubsection{Collection operations}
+\begin{itemize}
+    \item addItem(): add an item to the collection
+    \item getNext(): returns items from the collection, starting from the first
+        and then the next items upon repeated calls of this method.
+    \item resetNext(): resets the getNext() function to go back to the
+        beginning.
+    \item hasNext(): returns true if the collection has items left that have
+        not yet been returned by getNext(), otherwise false.
+    \item isEmpty(): whether the collection has items or not
+\end{itemize}
+
+\subsubsection{Fundamental operations of a computer}
+\begin{itemize}
+    \item LOAD: load a value from RAM into the CPU's control unit
+    \item STORE: store a value from the control unit into the RAM
+    \item ADD: adds two numbers together
+    \item COMPARE: compare two numbers together
+\end{itemize}
+
+Compound operations are made up of many fundamental operations, to do more
+complex tasks.
+
+\subsection{Introduction to programming}
+
+\subsubsection{Features of a programming language}
+A programming language is a combination of its semantics (the meaning of every
+construction possible in the language) and syntax (the structure of the
+language). A grammar is a meta language used to define the syntax of the
+language. Languages also have a specific vocabulary, i.e keywords that have
+special meanings. Commands in computer languages are always unambiguous.
+
+\subsubsection{Higher-level languages}
+Higher-level languages are necessary because they make program development
+simpler, faster and more understandable. However, these languages cannot be
+executed by a CPU which only understands simple fundamental instructions.
+Thus we use compilers and interpreters:
+\begin{itemize}
+    \item \textit{Compiler:} translates from high to low level only once, and
+        produces an output file that can be directly executed by the CPU.
+    \item \textit{Interpreter:} reads the high-level instructions, analyzes,
+        transaltes and executes them on the fly. This happens every time the
+        program needs to be run.
+\end{itemize}
+Some languages are compiled to bytecode, which is a more simpler and compact
+set of instructions compared to high-level languages but still not as low-level
+as direct CPU instructions. This bytecode is executed by a virtual machine
+program designed for that bytecode.
+
+\subsubsection{Common features of a language}
+\begin{itemize}
+    \item Variable: stores a data element
+    \item Constant: stores data that does not change
+    \item Operator: performs operations on data types
+    \item Object: made up of data and methods that describe a certain entity.
+\end{itemize}
+
+\subsubsection{Advantages of using sub-programs}
+\begin{itemize}
+    \item Code reuse
+    \item Breaking down problem into easier sub-problems
+    \item Maintainability and traceability
+    \item Abstraction
+\end{itemize}
+
+% =============================================================================
+% ====== Abstract Data Structures =============================================
+% =============================================================================
+\section{Abstract Data Structures}
+
+\subsection{Abstract Data Structures}
+
+\subsubsection{Thinking recursively}
+
+\textbf{Recursion} is when a method calls itself, until some terminating
+condition is met. It does not use looping constructs (like for or while loops).
+
+It follows the basic problem solving principle of breaking a problem down into
+smaller sub-problems and solving them.
+
+A recursive algorithm can be written using looping constructs, and vice versa.
+
+Examples of recursive algorithms: Tower of Hanoi problem, Koch snowflakes.
+
+\subsubsection{Two dimensional arrays}
+
+A one-dimensional array can be considered a single line of elements. A two-
+dimensional array would then be a \textit{table} of elements.
+
+2d-arrays are indexed by two subscripts: array[y][x]. If we think of the
+2d-array as a plane, then the y subscript indicates the position of the element
+along the vertical axis (starting from 0 at the top), while the x subscript
+indicates the position along the horizontal axis (starting from 0 at the left).
+The top-left element would thus be array[0][0], while the bottom right would be
+array[n-1][n-1] fora 2d array of size n by n.
+
+\subsubsection{Stacks}
+
+Stacks are a last-in, first-out (LIFO) data structure, meaning that the last
+element inserted into the stack is the first element retrieved from it.
+
+Stacks have three important methods:
+\begin{itemize}
+    \item push(): adds an item onto the stack
+    \item pop(): removes the last item added to the stack
+    \item isEmpty(): checks if the stack has any elements or not
+\end{itemize}
+
+Applications:
+\begin{itemize}
+    \item Back button of a web browser: the last page visited is the first one
+        the back button points to. as we keep pressing it, the browser keeps
+        going back to the previous pages opened. thus it follows a LIFO
+        structure
+\end{itemize}
+
+\subsubsection{Queues}
+
+Queues are a first-in, first-out (FIFO) structure.
+
+The three queue methods are:
+\begin{itemize}
+    \item enqueue(): adds an item to the end of the queue
+    \item dequeue(): removes an item from the start of the queue
+    \item isEmpty(): checks if queue is empty or not
+\end{itemize}
+
+Applications:
+\begin{itemize}
+    \item Used to model physical queues
+\end{itemize}
+
+\subsubsection{Linked lists}
+
+Each node in linked lists contains two items: one is the data and the other is
+a pointer to the next element. A header node is used at the beginning which
+only contains one item, the pointer to the next node. The last node's pointer
+points to a null value to indicate the end of the list.
+
+To remove a node, simply change the pointer of the previous node to the next
+node instead.
+
+To insert a node in some position, change the pointer of the previous node to
+the new node, and set the pointer of the new node to the next node.
+
+\subsubsection{Double linked lists}
+
+In double linked lists, each node has two pointers - one points to the previous
+element, and one points to the next element.
+
+\subsubsection{Circular linked lists}
+
+In circular linked lists, the last node does not point to a null value, but
+rather back to the header node (or the first node if there is no header node).
+
+\subsubsection{Trees}
+
+Definitions:
+\begin{itemize}
+    \item Children: the nodes below a given node
+    \item Key: the data field of a node
+    \item Leaf: a node with no children
+    \item Level: distance of a particular node from the root node
+    \item Height: number of edges from the top node to the deepest leaf
+    \item Parent: the node above a given node
+    \item Path: sequence of nodes travelled to get from one to the other
+    \item Root: the node at the top of the tree, with no parents
+    \item Subtree:
+    \item Traversing: to visit all the nodes of the tree in some order
+    \item Visiting: arrive at a node and perform some operation on it. if the
+        algorithm just passes over the node then it is not considered a visit
+\end{itemize}
+
+\textbf{Inorder traversal:} The algorithm calls itself on the left subtree,
+then visits the current node, then calls itself on the right subtree. (LCR)
+
+\textbf{Preorder traversal:} The algorithm visits the current node, then calls
+itself on the left subtree, then calls itself on the right subtree. (CLR)
+
+\textbf{Postorder traversal:} The algorithm calls itself on the left subtree,
+then calls itself on the right subtree, then visits the current node.
+
+An easy way to remember is that the namer of the traversal tells you when the
+current node is visited, otherwise the algorithm first calls itself on the left
+subtree, and then the right one. For inorder, the current is \textit{in}
+between the other positions, L-C-R. For pre, it is \textit{before} the others,
+so C-L-R. For post, it is \textit{after} the others, so L-R-C.
+
+\textbf{Operations on binary trees}
+
+Binary trees are sorted, meaning that values to the left are smaller and values
+to the right are larger. This is useful for determining the result of adding
+or removing nodes from a tree: add/remove the node in its correct position.
+
+\subsubsection{Static and dynamic data structures}
+
+In static structures, the size of the structure is constant and pre-determined.
+Memory allocation is fixed and the space reserved will always be available.
+Since the size is predetermined, there is also less overhead and hence faster
+speed.
+
+In dynamic structures, the size changes depending on how many items are being
+stored. They are generally slower due to overhead of constantly checking
+memory allocation and size to make sure there is enough space. However, they
+are more space efficient since only the required amount of memory is allcoated.
+
+% =============================================================================
+% ====== Resource Management ==================================================
+% =============================================================================
+\section{Resource Management}
+
+\subsection{Resource Management}
+
+\subsubsection{Critical resources}
+
+\textbf{Primary memory:} This is connected directly to the CPU which uses it to
+store instructions. It includes RAM of which there are two types: static and
+dynamic. SRAM is more expensive, but retains data as long as there is power.
+Data in DRAM gradually leaks and needs to be refreshed preiodically. Read-only
+memory (ROM) is also primary memory which is slower than RAM. It holds critical
+information needed to boot the PC. It usually holds the Basic IO System (BIOS)
+and sometimes the entire OS as well.
+
+\textbf{Secondary storage:} these are low cost, have larger capacity and
+permenent storage. There are two broad types: direct access (USBs, DVDs), where
+data can be accessed, retrieved, and stored \textit{directly} without having
+to read through all the previous data. The other type is sequential acccess
+(magnetic tapes), where previous data has to be read sequentially until the
+requested data can be located.
+
+\textbf{Processor speed:} MIPS (million instructions per second) is used to
+measure processor speed. Clock rate refers to the frequency at which the
+processor runs, and can be a rough indicator of processor performance. It is
+usually measured in gigahertz.
+
+\textbf{Bandwidth:} Memory bandwidth is the rate at which data can travel from
+SRAM to DRAM to the processor and vice versa. It is expressed in MB/s. Peak
+theoretical bandwidth is the theoretical limit, while sustained memory
+bandwidth is usually less and affected by various factors.
+
+\textbf{Screen resolution:} number of pixels, height times width. The more
+pixels, the better the resolution.
+
+\textbf{Disk storage:} e.g. hard disk drive, solid state drives, etc.
+
+\textbf{Sound processor:} Sound cards are used to process audio.
+
+\textbf{Graphics processor:} these are massively parallel processors which are
+very efficient at manipulating and processing graphics and images.
+
+\textbf{Network connectivity:} A Network Interface Card is used by devices for
+network connections.
+
+\subsubsection{Availability of resources}
+
+\textbf{Mainframes:} used by large organizations to handle large-bandwidth
+communication, bulk data processing, etc.
+
+\textbf{Supercomputers:} very fast and expensive, focused on mathematical
+calculations. Performance measured in floating-point operations per second
+(FLOPS).
+
+\textbf{Other devices:} servers, PCs, tablets, digital cameras, etc.
+
+% TODO
+\subsubsection{Limitation of resources}
+[INCOMPLETE]
+
+% TODO
+\subsubsection{Problems due to insufficient resources}
+[INCOMPLETE]
+
+% TODO
+\subsubsection{Role of the Operating System}
+
+\textbf{Managing memoery and processes:} [INCOMPLETE]
+
+\textbf{Managing peripherals:} [INCOMPLETE]
+
+\textbf{Scheduling:} [INCOMPLETE]
+
+\textbf{Policies and account management:} [INCOMPLETE]
+
+\textbf{Interrupts:} [INCOMPLETE]
+
+\textbf{Polling:} [INCOMPLETE]
+
+\textbf{Dedicated OSs:} [INCOMPLETE]
+
+\textbf{OS and complexity hiding:} [INCOMPLETE]
+
+% =============================================================================
+% ====== Control ==============================================================
+% =============================================================================
+\section{Control}
+
+\subsection{Control}
+
+\subsubsection{Centralized control systems}
+
+\textbf{Control system:} one or more devices that guide other devices or
+systems, allowing for complete automation of tasks. They may contain sensors
+to gain feedback from the environment and motors to control actuators in an
+appropriate manner. An example is automatic doors in supermarkets, which have
+sensors to detect when someone is entering or leaving and send signals to a
+microprocessor. This allows the operating system to operate the actuators and
+open/close doors.
+
+Control systems are mostly input, process and output systems. An input is
+provided to some algorithm, which performs some action and provides an output.
+This output can then be measured again by the control system and provided back
+as input.
+
+Examples:
+\begin{itemize}
+    \item Heating systems: an initial temperature is taken as input, which 
+        indicates the ideal value of the output and the `goal' of the system.
+        Feedback is used heavily. Sensors measure the temperature, the
+        processor decides what action to perform to reach the goal, the output
+        transducers change the temperature accordingly. The sensor again takes
+        the new temperature as input, and the loop continues.
+    \item Taxi meters:
+    \item Elevators: takes the desired destination as input and processor
+        decides how to operate machinery to reach the destination. other
+        inputs may be taken such as current location, location of other
+        elevators, load on the elevator etc.
+    \item Washing machines: sensors determine and control the load size in the
+        washing machine, water level, temperature, and the user interface
+        (buttons or a touch screen interface). The processor takes this
+        information and decides how to operate the machinery. actuators are
+        used to turn motors and operate the washing machine.
+    \item Process control: used to maintain the output of a specific process
+        within a desired range. open and closed loop controllers are used. For
+        example, a tank with liquid in it and a coil for heating the liquid.
+        An open feedback loop would need to know the relationship between the
+        heat dissipated and the temperature increase of the liquid to determine
+        the liquid's temperature. In closed loop, the temperature of the liquid
+        would be detected using temperature sensors, and the coil temperature
+        adjusted accordingly to achieve the desired liquid temperature.
+    \item Device drivers: computer programs for controlling computer devices,
+        such as keyobards and printers and graphics cards. these let the OS
+        access the device through a layer of abstraction.
+    \item Domestic robots: e.g. automatic vacuum cleaners. a number of sensors
+        are used within these to gather information about their surroundings
+        and perform their task.
+    \item GPS systems: a large complex computer controlled system. a GPS
+        receiver includes a sensor that locates multiple GPS satellites in
+        space, figures out the distance from each, calculates the time
+        difference and uses a process called `trilateration' to deduce its
+        location. also includes inputs from users to pinpoint desired
+        locations.
+    \item Traffic lights: as discussed before, traffic lights can be
+        fixed time, which are open loop control systems in that they dont
+        receive feedback from the environment. the are pre-configured to change
+        at intervals. dynamic control traffic lights use a close loop control
+        system, that is they gather feedback from the environment, to
+        dynamically control traffic, based on some appropriate algorithm. they
+        may use mounted sensors, located on the traffic lights, or embedded
+        sensors in the surface of the road.
+\end{itemize}
+
+\textbf{Use of microprocessors and sensor inputs} \\
+\begin{itemize}
+    \item General purpose: capable of running a wide range of programs, usually
+        integrated into a larger system, e.g. CPUs in desktop computers
+    \item Embedded (micro)controller: standalong chips designed to perform some
+        specific task, and do not need an entire computer system. found in many
+        control systems described above. generally need less power and smaller
+        in size as well.
+    \item GPU: special kind of microprocessor for graphics and images.
+\end{itemize}
+
+The main advantage of microprocessors in control systems is that process data
+much faster than humans could and can react to changes quickly. They are also
+automated and hence less error-prone, and can operate with little off-time.
+
+The main disadvantage is that they are pre-programmed and cannot handle
+unexpected situations, which may be common in some systems. They also cannot
+function if there is a power shortage.
+
+\textbf{Input sensors} convert physical quantities such as speed, temperature
+to discrete digital quantities using an analog-to-digital converter. These can
+then be read by microprocessors. Sensors share the following properties that
+determine their quality:
+\begin{itemize}
+    \item Accuracy of measurement for the physical quantity
+    \item Range of measurement for the physical quantity
+    \item Resolution (the smallest increment detectable) for the physical
+        quantity.
+\end{itemize}
+
+\textbf{Different input devices for data collection} \\
+Sensors are used as input devices. There are many types of sensors:
+\begin{itemize}
+    \item sound
+    \item motion
+    \item vibration
+    \item image/optical: active pixel sensors (for cameras), infrared (alarm
+        systems)
+    \item pressure
+    \item temperature
+    \item proximity
+\end{itemize}
+
+\textbf{Transducers} are devices that convert one form of energy into another.
+In computer systems, they are responsible for converting physical quantities
+into electrical signals and vice versa. This process is called transduction.
+Sensors can also be categotized as transducers since they detect physical
+quantities and convert them into digital quantities.
+
+\textbf{Actuators} are another type of transducers, used when returning the
+output of the processor. They are responsible for moving some kind of
+mechanism. They take some form of energy, usually electric current, and convert
+it into motion.
+
+Thus a control system may look like: \\
+Input $\rightarrow$ Transducer (sensor) $\rightarrow$ Processore $\rightarrow$
+Transducer (actuator) $\rightarrow$ Output
+
+\textbf{Role of feedback} \\
+Feedback is the process wher information from the result of an output is used
+as new input to the control system, creating a sort of loop.
+
+It is important in control systems that react to their environment and its
+changes. It helps keep the system stable.
+
+For example, a dynamic traffic light which uses feedback: first, the motion
+sensor detects that there are no cars (input), the processor decides to turn
+the light red and allow pedestrians to pass (output). After a while, a line of
+cars forms since the light is red. The system again detects (2nd input) this
+and now turns the light green to allow cars to pass (2nd output). This is an
+example of how feedback from one output is used to determine the next input
+and action, allowing the system to remain in a stable state.
+
+% TODO
+\textbf{Social impacts and ethical considerations}
+\begin{itemize}
+    \item Electronic tagging: [INCOMPLETE]
+    \item Surveillance: [INCOMPLETE]
+    \item Safety systems: [INCOMPLETE]
+\end{itemize}
+
+\subsubsection{Distributed systems}
+
+\textbf{Centralized system:} all resources reside in a single system. clients
+need to be able to connect to this system. Main benefit is lower operational
+costs, greater security, less administrative overhead and backup complexity.
+
+\textbf{Distributed system:} resources are distributed across various systems
+and each system is self-sustaining. a central system may coordinate distributed
+ones, but each can still function on its own, and failure of one distributed
+system will not be fatal to the overall system. these systems are more scalable
+and fault-tolerant.
+
+\textbf{Agents:} these can by anything that perceives its environment, through
+sensors and acts upon it through effectors.
+
+\textbf{Autonomous agents:} these are entities acting on behalf of an owner,
+with a degree of autonomy and little to no interference from the owner. Their
+environment often plays a significant role in their function:
+\begin{itemize}
+    \item Accessible/Inaccessible: the agent may or may not be able to obtain
+        compelte and accurate information about the environment.
+    \item Deterministic/Non-deterministic: whether the agent's actions will
+        have a pre-defined, guaranteed effect. The next state of the
+        environment depends entirely on its initial state.
+    \item Episodic/Non-episodic: whether an agent's actions are divided into
+        `episodes' or not. Episodes are independent, i.e. actions in previous
+        episodes do not affect actions in subsequent episodes.
+    \item static/dynamic: the environment may change while the agent is
+        deliberating an action
+    \item discrete/continuous: the environment may have discrete, clearly
+        defined states or continuous states.
+\end{itemize}
+
+\end{document}
+

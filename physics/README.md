@@ -1,0 +1,1 @@
+the notes are unfinished and pretty rough.
