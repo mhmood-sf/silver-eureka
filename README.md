@@ -5,13 +5,13 @@ School-related stuff from IB.
 ## Subjects
 
 #### HL
-- [Computer Science](/compsci): 7
-- [Mathematics: Analysis & Approaches](/math): 7
-- [Physics](/physics): 6
+- [Computer Science](/compsci)
+- [Mathematics: Analysis & Approaches](/math)
+- [Physics](/physics)
 
 #### SL
-- [Psychology](/psych): 7
-- English Language & Literature: 6
-- Mandarin Ab Initio: 7
+- [Psychology](/psych)
+- English Language & Literature
+- Mandarin Ab Initio
 
-[EE](/ee) / [ToK](/tok) / CAS: 2
+[EE](/ee) / [ToK](/tok)
